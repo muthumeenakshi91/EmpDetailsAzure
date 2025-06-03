@@ -19,7 +19,7 @@ jobs:
       - name: Build Project
         run: mvn clean install -DskipTests
       - name: Upload Artifact for deployment jobs
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v3.1.3
         with:
           name: springboot-azure-example
           path: ${{ github.workspace }}/target/*.jar
