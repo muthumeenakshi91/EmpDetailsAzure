@@ -6,34 +6,21 @@ on:
       - main
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Soruce
+      - name: Checkout Source
         uses: actions/checkout@v3
       - name: Setup Java
         uses: actions/setup-java@v3
         with:
+          java-version: '21'
           distribution: 'temurin'
-          java-version: '17'
-      - name: Build Project
+      - name: Build
         run: mvn clean install -DskipTests
-      - name: Upload Artifact for deployment jobs
-        uses: actions/upload-artifact@v3.1.3
-        with:
-          name: springboot-azure-example
-          path: ${{ github.workspace }}/target/*.jar
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Download Artifact from build jobs
-        uses: actions/download-artifact@v2
-        with:
-          name: springboot-azure-example
-      - name: Deploy to Azure App Service
-        uses: actions/webapps-deploy@v2
+      - name: Deploy
+        uses: azure/webapps-deploy@v2
         with:
           app-name: EmpDetailsWebApp
-          publish-profile: ${{ secrets.azureWebAppPublishProfile}}
-          package: '*.jar'
+          publish-profile: ${{ secrets.azureWebAppPublishProfile }}
+          package: target/*.jar
