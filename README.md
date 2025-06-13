@@ -37,3 +37,11 @@ GET	/api/employees/{id}	Get employee by ID
 PUT	/api/employees/{id}	Update employee by ID
 DELETE	/api/employees/{id}	Delete employee by ID
 
+**Post request sample (http://localhost:8090/api/employees)
+{
+    "name": "Thomas",
+    "department": "Sales",
+    "email": "Thomas@adventure-works.com",
+    "salary": 770000.0
+}
+
